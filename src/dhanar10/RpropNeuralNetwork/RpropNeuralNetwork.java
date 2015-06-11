@@ -82,7 +82,7 @@ public class RpropNeuralNetwork {
 						yHidden[j] += yInput[k] * wInputHidden[k][j];
 					}
 					
-					yHidden[j] = 1 / (1 + Math.pow(Math.E, -yHidden[j]));
+					yHidden[j] = sigmoid(yHidden[j]);
 				}
 				
 				yOutput[0] = 0;
@@ -91,12 +91,12 @@ public class RpropNeuralNetwork {
 					yOutput[0] += yHidden[j] * wHiddenOutput[j];
 				}
 				
-				yOutput[0] = 1 / (1 + Math.pow(Math.E, -yOutput[0]));
+				yOutput[0] = sigmoid(yOutput[0]);
 				
-				eOutput[0] = (yTarget[0] - yOutput[0]) * yOutput[0] * (1 - yOutput[0]);
+				eOutput[0] = (yTarget[0] - yOutput[0]) * dsigmoid(yOutput[0]);
 				
 				for (int j = 0; j < yHidden.length; j++) {
-					eHidden[j] = eOutput[0] * wHiddenOutput[j] * yHidden[j] * (1 - yHidden[j]);
+					eHidden[j] = eOutput[0] * wHiddenOutput[j] *  dsigmoid(yHidden[j]);
 				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
@@ -178,7 +178,7 @@ public class RpropNeuralNetwork {
 					yHidden[j] += yInput[k] * wInputHidden[k][j];
 				}
 				
-				yHidden[j] = 1 / (1 + Math.pow(Math.E, -yHidden[j]));
+				yHidden[j] = sigmoid(yHidden[j]);
 			}
 			
 			yOutput[0] = 0;
@@ -187,11 +187,19 @@ public class RpropNeuralNetwork {
 				yOutput[0] += yHidden[j] * wHiddenOutput[j];
 			}
 			
-			yOutput[0] = 1 / (1 + Math.pow(Math.E, -yOutput[0]));
+			yOutput[0] = sigmoid(yOutput[0]);
 			
 			System.out.println(yInput[0] + "\t" + yInput[1] + "\t" + yOutput[0]);
 		}
 		
 		System.exit(status);
+	}
+	
+	private static double sigmoid(double x) {
+		return 1 / (1 + Math.pow(Math.E, -x));
+	}
+	
+	private static double dsigmoid(double x) {
+		return x * (1 - x);
 	}
 }
