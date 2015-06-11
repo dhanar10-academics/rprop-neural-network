@@ -99,7 +99,9 @@ public class RpropNeuralNetwork {
 					yOutput[j] = sigmoid(yOutput[j]);
 				}
 				
-				eOutput[0] = (yTarget[0] - yOutput[0]) * dsigmoid(yOutput[0]);
+				for (int j = 0; j < yOutput.length; j++) {
+					eOutput[j] = (yTarget[j] - yOutput[j]) * dsigmoid(yOutput[j]);
+				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
 					eHidden[j] = eOutput[0] * wHiddenOutput[j][0] *  dsigmoid(yHidden[j]);
