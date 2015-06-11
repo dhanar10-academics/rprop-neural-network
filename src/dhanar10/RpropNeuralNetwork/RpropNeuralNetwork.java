@@ -61,7 +61,7 @@ public class RpropNeuralNetwork {
 			double eOutput[] = new double[OUTPUT_NEURON];
 			
 			double gInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
-			double gHiddenOutput[] = new double[HIDDEN_NEURON];
+			double gHiddenOutput[][] = new double[HIDDEN_NEURON][OUTPUT_NEURON];
 
 			epoch++;
 			
@@ -106,7 +106,7 @@ public class RpropNeuralNetwork {
 				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
-					gHiddenOutput[j] += eOutput[0] * yHidden[j];
+					gHiddenOutput[j][0] += eOutput[0] * yHidden[j];
 				}
 				
 				mse += Math.pow(yTarget[0] - yOutput[0], 2);
@@ -133,20 +133,20 @@ public class RpropNeuralNetwork {
 			}
 			
 			for (int j = 0; j < yHidden.length; j++) {
-				double change = gpHiddenOutput[j][0] * gHiddenOutput[j];
+				double change = gpHiddenOutput[j][0] * gHiddenOutput[j][0];
 				
 				if (change > 0) {
 					dHiddenOutput[j][0] = Math.min(dHiddenOutput[j][0] * ETA_PLUS, DELTA_MAX);
-					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j]) * dHiddenOutput[j][0];
-					gpHiddenOutput[j][0] = gHiddenOutput[j];
+					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j][0]) * dHiddenOutput[j][0];
+					gpHiddenOutput[j][0] = gHiddenOutput[j][0];
 				}
 				else if (change < 0) {
 					dHiddenOutput[j][0] = Math.max(dHiddenOutput[j][0] * ETA_MINUS, DELTA_MIN);
 					gpHiddenOutput[j][0] = 0;
 				}
 				else if (change == 0) {
-					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j]) * dHiddenOutput[j][0];
-					gpHiddenOutput[j][0] = gHiddenOutput[j];
+					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j][0]) * dHiddenOutput[j][0];
+					gpHiddenOutput[j][0] = gHiddenOutput[j][0];
 				}
 			}
 			
