@@ -3,6 +3,7 @@ package dhanar10.RpropNeuralNetwork;
 public class RpropNeuralNetwork {
 	public static final int INPUT_NEURON = 2;
 	public static final int HIDDEN_NEURON = 4;
+	public static final int OUTPUT_NEURON = 1;
 	public static final double DELTA_ZERO = 0.1;
 	public static final double ETA_PLUS = 1.2;
 	public static final double ETA_MINUS = 0.5;
@@ -16,7 +17,7 @@ public class RpropNeuralNetwork {
 		
 		double yInput[] = new double[INPUT_NEURON];
 		double yHidden[] = new double[HIDDEN_NEURON];
-		double yOutput = 0;
+		double yOutput[] = new double[OUTPUT_NEURON];
 		
 		double wInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 		double wHiddenOutput[] = new double[HIDDEN_NEURON];
@@ -54,7 +55,7 @@ public class RpropNeuralNetwork {
 		while (true) {
 			double mse = 0;
 			
-			double yTarget = 0;
+			double yTarget[] = new double[OUTPUT_NEURON];
 			
 			double eHidden[] = new double[HIDDEN_NEURON];
 			double eOutput = 0;
@@ -69,7 +70,7 @@ public class RpropNeuralNetwork {
 					yInput[j] = dTraining[i][j];
 				}
 				
-				yTarget = dTraining[i][dTraining[i].length - 1];
+				yTarget[0] = dTraining[i][dTraining[i].length - 1];
 				
 				for (int j = 0; j < yHidden.length; j++) {
 					yHidden[j] = 0;
@@ -81,15 +82,15 @@ public class RpropNeuralNetwork {
 					yHidden[j] = 1 / (1 + Math.pow(Math.E, -yHidden[j]));
 				}
 				
-				yOutput = 0;
+				yOutput[0] = 0;
 				
 				for (int j = 0; j < yHidden.length; j++) {
-					yOutput += yHidden[j] * wHiddenOutput[j];
+					yOutput[0] += yHidden[j] * wHiddenOutput[j];
 				}
 				
-				yOutput = 1 / (1 + Math.pow(Math.E, -yOutput));
+				yOutput[0] = 1 / (1 + Math.pow(Math.E, -yOutput[0]));
 				
-				eOutput = (yTarget - yOutput) * yOutput * (1 - yOutput);
+				eOutput = (yTarget[0] - yOutput[0]) * yOutput[0] * (1 - yOutput[0]);
 				
 				for (int j = 0; j < yHidden.length; j++) {
 					eHidden[j] = eOutput * wHiddenOutput[j] * yHidden[j] * (1 - yHidden[j]);
@@ -105,7 +106,7 @@ public class RpropNeuralNetwork {
 					gHiddenOutput[j] += eOutput * yHidden[j];
 				}
 				
-				mse += Math.pow(yTarget - yOutput, 2);
+				mse += Math.pow(yTarget[0] - yOutput[0], 2);
 			}
 			
 			for (int j = 0; j < yHidden.length; j++) {
@@ -177,15 +178,15 @@ public class RpropNeuralNetwork {
 				yHidden[j] = 1 / (1 + Math.pow(Math.E, -yHidden[j]));
 			}
 			
-			yOutput = 0;
+			yOutput[0] = 0;
 			
 			for (int j = 0; j < yHidden.length; j++) {
-				yOutput += yHidden[j] * wHiddenOutput[j];
+				yOutput[0] += yHidden[j] * wHiddenOutput[j];
 			}
 			
-			yOutput = 1 / (1 + Math.pow(Math.E, -yOutput));
+			yOutput[0] = 1 / (1 + Math.pow(Math.E, -yOutput[0]));
 			
-			System.out.println(yInput[0] + "\t" + yInput[1] + "\t" + yOutput);
+			System.out.println(yInput[0] + "\t" + yInput[1] + "\t" + yOutput[0]);
 		}
 		
 		System.exit(status);
