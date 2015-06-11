@@ -137,42 +137,42 @@ public class RpropNeuralNetwork {
 				}
 			}
 			
-			for (int j = 0; j < yHidden.length; j++) {
-				for (int k = 0; k < yInput.length; k++) {
-					double change = gpInputHidden[k][j] * gInputHidden[k][j];
+			for (int i = 0; i < yHidden.length; i++) {
+				for (int j = 0; j < yInput.length; j++) {
+					double change = gpInputHidden[j][i] * gInputHidden[j][i];
 					
 					if (change > 0) {
-						dInputHidden[k][j] = Math.min(dInputHidden[k][j] * ETA_PLUS, DELTA_MAX);
-						wInputHidden[k][j] += Math.signum(gInputHidden[k][j])  * dInputHidden[k][j];
-						gpInputHidden[k][j] = gInputHidden[k][j];
+						dInputHidden[j][i] = Math.min(dInputHidden[j][i] * ETA_PLUS, DELTA_MAX);
+						wInputHidden[j][i] += Math.signum(gInputHidden[j][i])  * dInputHidden[j][i];
+						gpInputHidden[j][i] = gInputHidden[j][i];
 					}
 					else if (change < 0) {
-						dInputHidden[k][j] = Math.max(dInputHidden[k][j] * ETA_MINUS, DELTA_MIN);
-						gpInputHidden[k][j] = 0;
+						dInputHidden[j][i] = Math.max(dInputHidden[j][i] * ETA_MINUS, DELTA_MIN);
+						gpInputHidden[j][i] = 0;
 					}
 					else if (change == 0) {
-						wInputHidden[k][j] += Math.signum(gInputHidden[k][j]) * dInputHidden[k][j];
-						gpInputHidden[k][j] = gInputHidden[k][j];
+						wInputHidden[j][i] += Math.signum(gInputHidden[j][i]) * dInputHidden[j][i];
+						gpInputHidden[j][i] = gInputHidden[j][i];
 					}
 				}
 			}
 			
-			for (int j = 0; j < yOutput.length; j++) {
-				for (int k = 0; k < yHidden.length; k++) {
-					double change = gpHiddenOutput[k][j] * gHiddenOutput[k][j];
+			for (int i = 0; i < yOutput.length; i++) {
+				for (int j = 0; j < yHidden.length; j++) {
+					double change = gpHiddenOutput[j][i] * gHiddenOutput[j][i];
 					
 					if (change > 0) {
-						dHiddenOutput[k][j] = Math.min(dHiddenOutput[k][j] * ETA_PLUS, DELTA_MAX);
-						wHiddenOutput[k][j] += Math.signum(gHiddenOutput[k][j])  * dHiddenOutput[k][j];
-						gpHiddenOutput[k][j] = gHiddenOutput[k][j];
+						dHiddenOutput[j][i] = Math.min(dHiddenOutput[j][i] * ETA_PLUS, DELTA_MAX);
+						wHiddenOutput[j][i] += Math.signum(gHiddenOutput[j][i])  * dHiddenOutput[j][i];
+						gpHiddenOutput[j][i] = gHiddenOutput[j][i];
 					}
 					else if (change < 0) {
-						dHiddenOutput[k][j] = Math.max(dHiddenOutput[k][j] * ETA_MINUS, DELTA_MIN);
-						gpHiddenOutput[k][j] = 0;
+						dHiddenOutput[j][i] = Math.max(dHiddenOutput[j][i] * ETA_MINUS, DELTA_MIN);
+						gpHiddenOutput[j][i] = 0;
 					}
 					else if (change == 0) {
-						wHiddenOutput[k][j] += Math.signum(gHiddenOutput[k][j]) * dHiddenOutput[k][j];
-						gpHiddenOutput[k][j] = gHiddenOutput[k][j];
+						wHiddenOutput[j][i] += Math.signum(gHiddenOutput[j][i]) * dHiddenOutput[j][i];
+						gpHiddenOutput[j][i] = gHiddenOutput[j][i];
 					}
 				}
 			}
@@ -195,28 +195,28 @@ public class RpropNeuralNetwork {
 	}
 	
 	public double[] run(double data[]) {
-		for (int j = 0; j < yInput.length; j++) {
-			yInput[j] = data[j];
+		for (int i = 0; i < yInput.length; i++) {
+			yInput[i] = data[i];
 		}
 		
-		for (int j = 0; j < yHidden.length; j++) {
-			yHidden[j] = 0;
+		for (int i = 0; i < yHidden.length; i++) {
+			yHidden[i] = 0;
 			
-			for (int k = 0; k < yInput.length; k++) {
-				yHidden[j] += yInput[k] * wInputHidden[k][j];
+			for (int j = 0; j < yInput.length; j++) {
+				yHidden[i] += yInput[j] * wInputHidden[j][i];
 			}
 			
-			yHidden[j] = sigmoid(yHidden[j]);
+			yHidden[i] = sigmoid(yHidden[i]);
 		}
 		
-		for (int j = 0; j < yOutput.length; j++) {
-			yOutput[j] = 0;
+		for (int i = 0; i < yOutput.length; i++) {
+			yOutput[i] = 0;
 			
-			for (int k = 0; k < yHidden.length; k++) {
-				yOutput[j] += yHidden[k] * wHiddenOutput[k][j];
+			for (int j = 0; j < yHidden.length; j++) {
+				yOutput[i] += yHidden[j] * wHiddenOutput[j][i];
 			}
 			
-			yOutput[j] = sigmoid(yOutput[j]);
+			yOutput[i] = sigmoid(yOutput[i]);
 		}
 		
 		return yOutput;
