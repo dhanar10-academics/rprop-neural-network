@@ -6,8 +6,6 @@ public class RpropNeuralNetwork {
 	public static final double ETA_MINUS = 0.5;
 	public static final double DELTA_MAX = 50;
 	public static final double DELTA_MIN = 0.000001;
-	public static final double TARGET_MSE = 0.001;
-	public static final int MAX_EPOCH = 10000;
 	
 	private double yInput[];
 	private double yHidden[];
@@ -20,7 +18,7 @@ public class RpropNeuralNetwork {
 		double data[][] = {{0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0}}; // XOR
 		
 		RpropNeuralNetwork rprop = new RpropNeuralNetwork(2, 4, 1);
-		boolean success = rprop.train(data);
+		boolean success = rprop.train(data, 0.001, 10000);
 		
 		System.out.println();
 		
@@ -50,7 +48,7 @@ public class RpropNeuralNetwork {
 		wHiddenOutput = new double[hidden][output];
 	}
 	
-	public boolean train(double data[][]) {
+	public boolean train(double data[][], double targetMse, double maxEpoch) {
 		boolean success = true;
 		
 		double dInputHidden[][] = new double[yInput.length][yHidden.length];
@@ -183,11 +181,11 @@ public class RpropNeuralNetwork {
 			
 			System.out.println(epoch + "\t" + mse);
 			
-			if (mse < TARGET_MSE) {
+			if (mse < targetMse) {
 				break;
 			}
 			
-			if (epoch == MAX_EPOCH) {
+			if (epoch == maxEpoch) {
 				success = false;;
 				break;
 			}
