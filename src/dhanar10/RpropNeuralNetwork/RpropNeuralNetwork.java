@@ -89,13 +89,15 @@ public class RpropNeuralNetwork {
 					yHidden[j] = sigmoid(yHidden[j]);
 				}
 				
-				yOutput[0] = 0;
-				
-				for (int j = 0; j < yHidden.length; j++) {
-					yOutput[0] += yHidden[j] * wHiddenOutput[j][0];
+				for (int j = 0; j < yOutput.length; j++) {
+					yOutput[j] = 0;
+					
+					for (int k = 0; k < yHidden.length; k++) {
+						yOutput[j] += yHidden[k] * wHiddenOutput[k][j];
+					}
+					
+					yOutput[j] = sigmoid(yOutput[j]);
 				}
-				
-				yOutput[0] = sigmoid(yOutput[0]);
 				
 				eOutput[0] = (yTarget[0] - yOutput[0]) * dsigmoid(yOutput[0]);
 				
@@ -185,13 +187,15 @@ public class RpropNeuralNetwork {
 				yHidden[j] = sigmoid(yHidden[j]);
 			}
 			
-			yOutput[0] = 0;
-			
-			for (int j = 0; j < yHidden.length; j++) {
-				yOutput[0] += yHidden[j] * wHiddenOutput[j][0];
+			for (int j = 0; j < yOutput.length; j++) {
+				yOutput[j] = 0;
+				
+				for (int k = 0; k < yHidden.length; k++) {
+					yOutput[j] += yHidden[k] * wHiddenOutput[k][j];
+				}
+				
+				yOutput[j] = sigmoid(yOutput[j]);
 			}
-			
-			yOutput[0] = sigmoid(yOutput[0]);
 			
 			System.out.println(yInput[0] + "\t" + yInput[1] + "\t" + yOutput[0]);
 		}
