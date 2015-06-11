@@ -30,7 +30,7 @@ public class RpropNeuralNetwork {
 		
 		int epoch = 0;
 		
-		double dTraining[][] = {{0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0}}; // XOR
+		double data[][] = {{0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0}}; // XOR
 		
 		for (int i = 0; i < wInputHidden.length; i++) {
 			for (int j = 0; j < wInputHidden[0].length; j++) {
@@ -65,13 +65,13 @@ public class RpropNeuralNetwork {
 
 			epoch++;
 			
-			for (int i = 0; i < dTraining.length; i++) {
-				for (int j = 0; j < dTraining[i].length; j++) {
+			for (double[] d : data) {
+				for (int j = 0; j < d.length; j++) {
 					if (j < yInput.length) {
-						yInput[j] = dTraining[i][j];
+						yInput[j] = d[j];
 					}
 					else {
-						yTarget[j - yInput.length] = dTraining[i][j];
+						yTarget[j - yInput.length] = d[j];
 					}
 				}
 				
@@ -150,7 +150,7 @@ public class RpropNeuralNetwork {
 				}
 			}
 			
-			mse /= dTraining.length;
+			mse /= data.length;
 			
 			System.out.println(epoch + "\t" + mse);
 			
@@ -166,9 +166,9 @@ public class RpropNeuralNetwork {
 		
 		System.out.println();
 		
-		for (int i = 0; i < dTraining.length; i++) {
+		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < yInput.length; j++) {
-				yInput[j] = dTraining[i][j];
+				yInput[j] = data[i][j];
 			}
 			
 			for (int j = 0; j < yHidden.length; j++) {
