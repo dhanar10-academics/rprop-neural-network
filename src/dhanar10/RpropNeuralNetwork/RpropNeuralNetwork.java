@@ -146,21 +146,23 @@ public class RpropNeuralNetwork {
 				}
 			}
 			
-			for (int j = 0; j < yHidden.length; j++) {
-				double change = gpHiddenOutput[j][0] * gHiddenOutput[j][0];
-				
-				if (change > 0) {
-					dHiddenOutput[j][0] = Math.min(dHiddenOutput[j][0] * ETA_PLUS, DELTA_MAX);
-					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j][0]) * dHiddenOutput[j][0];
-					gpHiddenOutput[j][0] = gHiddenOutput[j][0];
-				}
-				else if (change < 0) {
-					dHiddenOutput[j][0] = Math.max(dHiddenOutput[j][0] * ETA_MINUS, DELTA_MIN);
-					gpHiddenOutput[j][0] = 0;
-				}
-				else if (change == 0) {
-					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j][0]) * dHiddenOutput[j][0];
-					gpHiddenOutput[j][0] = gHiddenOutput[j][0];
+			for (int j = 0; j < yOutput.length; j++) {
+				for (int k = 0; k < yHidden.length; k++) {
+					double change = gpHiddenOutput[k][j] * gHiddenOutput[k][j];
+					
+					if (change > 0) {
+						dHiddenOutput[k][j] = Math.min(dHiddenOutput[k][j] * ETA_PLUS, DELTA_MAX);
+						wHiddenOutput[k][j] += Math.signum(gHiddenOutput[k][j])  * dHiddenOutput[k][j];
+						gpHiddenOutput[k][j] = gHiddenOutput[k][j];
+					}
+					else if (change < 0) {
+						dHiddenOutput[k][j] = Math.max(dHiddenOutput[k][j] * ETA_MINUS, DELTA_MIN);
+						gpHiddenOutput[k][j] = 0;
+					}
+					else if (change == 0) {
+						wHiddenOutput[k][j] += Math.signum(gHiddenOutput[k][j]) * dHiddenOutput[k][j];
+						gpHiddenOutput[k][j] = gHiddenOutput[k][j];
+					}
 				}
 			}
 			
