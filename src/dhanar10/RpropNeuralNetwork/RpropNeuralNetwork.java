@@ -66,11 +66,14 @@ public class RpropNeuralNetwork {
 			epoch++;
 			
 			for (int i = 0; i < dTraining.length; i++) {
-				for (int j = 0; j < yInput.length; j++) {
-					yInput[j] = dTraining[i][j];
+				for (int j = 0; j < dTraining[i].length; j++) {
+					if (j < yInput.length) {
+						yInput[j] = dTraining[i][j];
+					}
+					else {
+						yTarget[j - yInput.length] = dTraining[i][j];
+					}
 				}
-				
-				yTarget[0] = dTraining[i][dTraining[i].length - 1];
 				
 				for (int j = 0; j < yHidden.length; j++) {
 					yHidden[j] = 0;
