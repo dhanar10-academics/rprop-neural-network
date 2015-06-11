@@ -39,7 +39,9 @@ public class RpropNeuralNetwork {
 		}
 		
 		for (int i = 0; i < wHiddenOutput.length; i++) {
-			wHiddenOutput[i][0] = Math.random();
+			for (int j = 0; j < wHiddenOutput[0].length; j++) {
+				wHiddenOutput[i][j] = Math.random();
+			}
 		}
 		
 		for (int i = 0; i < dInputHidden.length; i++) {
@@ -49,7 +51,9 @@ public class RpropNeuralNetwork {
 		}
 		
 		for (int i = 0; i < dHiddenOutput.length; i++) {
-			dHiddenOutput[i][0] = DELTA_ZERO;
+			for (int j = 0; j < dHiddenOutput[0].length; j++) {
+				dHiddenOutput[i][j] = DELTA_ZERO;
+			}
 		}
 		
 		while (true) {
