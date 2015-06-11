@@ -117,8 +117,10 @@ public class RpropNeuralNetwork {
 					}
 				}
 				
-				for (int j = 0; j < yHidden.length; j++) {
-					gHiddenOutput[j][0] += eOutput[0] * yHidden[j];
+				for (int j = 0; j < yOutput.length; j++) {
+					for (int k = 0; k < yHidden.length; k++) {
+						gHiddenOutput[k][j] += eOutput[j] * yHidden[k];
+					}
 				}
 				
 				mse += Math.pow(yTarget[0] - yOutput[0], 2);
