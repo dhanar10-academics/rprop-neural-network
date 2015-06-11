@@ -1,6 +1,7 @@
 package dhanar10.RpropNeuralNetwork;
 
 public class RpropNeuralNetwork {
+	public static final int INPUT_NEURON = 2;
 	public static final int HIDDEN_NEURON = 4;
 	public static final double DELTA_ZERO = 0.1;
 	public static final double ETA_PLUS = 1.2;
@@ -13,17 +14,17 @@ public class RpropNeuralNetwork {
 	public static void main(String[] args) {
 		int status = 0;
 		
-		double yInput[] = new double[2];
+		double yInput[] = new double[INPUT_NEURON];
 		double yHidden[] = new double[HIDDEN_NEURON];
 		double yOutput = 0;
 		
-		double wInputHidden[][] = new double[2][HIDDEN_NEURON];
+		double wInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 		double wHiddenOutput[] = new double[HIDDEN_NEURON];
 		
-		double dInputHidden[][] = new double[2][HIDDEN_NEURON];
+		double dInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 		double dHiddenOutput[] = new double[HIDDEN_NEURON];
 		
-		double gpInputHidden[][] = new double[2][HIDDEN_NEURON];
+		double gpInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 		double gpHiddenOutput[] = new double[HIDDEN_NEURON];
 		
 		int epoch = 0;
@@ -58,7 +59,7 @@ public class RpropNeuralNetwork {
 			double eHidden[] = new double[HIDDEN_NEURON];
 			double eOutput = 0;
 			
-			double gInputHidden[][] = new double[2][HIDDEN_NEURON];
+			double gInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 			double gHiddenOutput[] = new double[HIDDEN_NEURON];
 
 			epoch++;
