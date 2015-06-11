@@ -61,15 +61,15 @@ public class RpropNeuralNetwork {
 			
 			double yTarget[] = new double[OUTPUT_NEURON];
 			
-			double eHidden[] = new double[HIDDEN_NEURON];
-			double eOutput[] = new double[OUTPUT_NEURON];
-			
 			double gInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 			double gHiddenOutput[][] = new double[HIDDEN_NEURON][OUTPUT_NEURON];
 
 			epoch++;
 			
 			for (double[] d : data) {
+				double eHidden[] = new double[HIDDEN_NEURON];
+				double eOutput[] = new double[OUTPUT_NEURON];
+				
 				for (int j = 0; j < d.length; j++) {
 					if (j < yInput.length) {
 						yInput[j] = d[j];
@@ -104,7 +104,11 @@ public class RpropNeuralNetwork {
 				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
-					eHidden[j] = eOutput[0] * wHiddenOutput[j][0] *  dsigmoid(yHidden[j]);
+					for (int k = 0; k < yOutput.length; k++) {
+						eHidden[j] += eOutput[k] * wHiddenOutput[j][k];
+					}
+					
+					eHidden[j] *= dsigmoid(yHidden[j]); // FIXME
 				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
