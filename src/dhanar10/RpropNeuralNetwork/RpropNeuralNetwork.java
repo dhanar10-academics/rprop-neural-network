@@ -58,7 +58,7 @@ public class RpropNeuralNetwork {
 			double yTarget[] = new double[OUTPUT_NEURON];
 			
 			double eHidden[] = new double[HIDDEN_NEURON];
-			double eOutput = 0;
+			double eOutput[] = new double[OUTPUT_NEURON];
 			
 			double gInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
 			double gHiddenOutput[] = new double[HIDDEN_NEURON];
@@ -90,10 +90,10 @@ public class RpropNeuralNetwork {
 				
 				yOutput[0] = 1 / (1 + Math.pow(Math.E, -yOutput[0]));
 				
-				eOutput = (yTarget[0] - yOutput[0]) * yOutput[0] * (1 - yOutput[0]);
+				eOutput[0] = (yTarget[0] - yOutput[0]) * yOutput[0] * (1 - yOutput[0]);
 				
 				for (int j = 0; j < yHidden.length; j++) {
-					eHidden[j] = eOutput * wHiddenOutput[j] * yHidden[j] * (1 - yHidden[j]);
+					eHidden[j] = eOutput[0] * wHiddenOutput[j] * yHidden[j] * (1 - yHidden[j]);
 				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
@@ -103,7 +103,7 @@ public class RpropNeuralNetwork {
 				}
 				
 				for (int j = 0; j < yHidden.length; j++) {
-					gHiddenOutput[j] += eOutput * yHidden[j];
+					gHiddenOutput[j] += eOutput[0] * yHidden[j];
 				}
 				
 				mse += Math.pow(yTarget[0] - yOutput[0], 2);
