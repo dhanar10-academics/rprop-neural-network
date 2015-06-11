@@ -26,7 +26,7 @@ public class RpropNeuralNetwork {
 		double dHiddenOutput[][] = new double[HIDDEN_NEURON][OUTPUT_NEURON];
 		
 		double gpInputHidden[][] = new double[INPUT_NEURON][HIDDEN_NEURON];
-		double gpHiddenOutput[] = new double[HIDDEN_NEURON];
+		double gpHiddenOutput[][] = new double[HIDDEN_NEURON][OUTPUT_NEURON];
 		
 		int epoch = 0;
 		
@@ -133,20 +133,20 @@ public class RpropNeuralNetwork {
 			}
 			
 			for (int j = 0; j < yHidden.length; j++) {
-				double change = gpHiddenOutput[j] * gHiddenOutput[j];
+				double change = gpHiddenOutput[j][0] * gHiddenOutput[j];
 				
 				if (change > 0) {
 					dHiddenOutput[j][0] = Math.min(dHiddenOutput[j][0] * ETA_PLUS, DELTA_MAX);
 					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j]) * dHiddenOutput[j][0];
-					gpHiddenOutput[j] = gHiddenOutput[j];
+					gpHiddenOutput[j][0] = gHiddenOutput[j];
 				}
 				else if (change < 0) {
 					dHiddenOutput[j][0] = Math.max(dHiddenOutput[j][0] * ETA_MINUS, DELTA_MIN);
-					gpHiddenOutput[j] = 0;
+					gpHiddenOutput[j][0] = 0;
 				}
 				else if (change == 0) {
 					wHiddenOutput[j][0] += Math.signum(gHiddenOutput[j]) * dHiddenOutput[j][0];
-					gpHiddenOutput[j] = gHiddenOutput[j];
+					gpHiddenOutput[j][0] = gHiddenOutput[j];
 				}
 			}
 			
