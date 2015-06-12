@@ -7,6 +7,8 @@ public class RpropNeuralNetwork {
 	public static final double DELTA_MAX = 50;
 	public static final double DELTA_MIN = 0.000001;
 	
+	private double mse = 0;
+	
 	private double yInput[];
 	private double yHidden[];
 	private double yOutput[];
@@ -36,6 +38,10 @@ public class RpropNeuralNetwork {
 			System.out.println();
 		}
 		
+		System.out.println();
+		
+		System.out.println(rprop.getMse());
+		
 		System.exit(success ? 0 : 1);
 	}
 	
@@ -51,13 +57,13 @@ public class RpropNeuralNetwork {
 	public boolean train(double data[][], double targetMse, double maxEpoch) {
 		boolean success = true;
 		
+		int epoch = 0;
+		
 		double dInputHidden[][] = new double[yInput.length][yHidden.length];
 		double dHiddenOutput[][] = new double[yHidden.length][yOutput.length];
 		
 		double gpInputHidden[][] = new double[yInput.length][yHidden.length];
 		double gpHiddenOutput[][] = new double[yHidden.length][yOutput.length];
-		
-		int epoch = 0;
 		
 		for (int i = 0; i < wInputHidden.length; i++) {
 			for (int j = 0; j < wInputHidden[0].length; j++) {
@@ -84,12 +90,12 @@ public class RpropNeuralNetwork {
 		}
 		
 		while (true) {
-			double mse = 0;
-			
 			double gInputHidden[][] = new double[yInput.length][yHidden.length];
 			double gHiddenOutput[][] = new double[yHidden.length][yOutput.length];
 
 			epoch++;
+			
+			mse = 0;
 			
 			for (double[] d : data) {
 				double yTarget[] = new double[yOutput.length];
@@ -220,6 +226,10 @@ public class RpropNeuralNetwork {
 		}
 		
 		return yOutput;
+	}
+	
+	public double getMse() {
+		return mse;
 	}
 	
 	private double sigmoid(double x) {
