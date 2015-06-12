@@ -1,4 +1,4 @@
-package dhanar10.RpropNeuralNetwork;
+package dhanar10.rpropneuralnetwork;
 
 public class RpropNeuralNetwork {
 	public static final double DELTA_ZERO = 0.1;
