@@ -194,9 +194,9 @@ public class RpropNeuralNetwork {
 		return success;
 	}
 	
-	public double[] run(double data[]) {
+	public double[] run(double input[]) {
 		for (int i = 0; i < yInput.length; i++) {
-			yInput[i] = data[i];
+			yInput[i] = input[i];
 		}
 		
 		for (int i = 0; i < yHidden.length; i++) {
