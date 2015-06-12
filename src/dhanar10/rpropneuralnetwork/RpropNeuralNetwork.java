@@ -28,19 +28,15 @@ public class RpropNeuralNetwork {
 			double output[] = rprop.run(data[i]);
 			
 			for (int j = 0; j < data[i].length - output.length; j++) {
-				System.out.print(data[i][j] + "\t");
+				System.out.printf("%.2f%s", data[i][j], "\t");
 			}
 			
 			for (int j = 0; j < output.length; j++) {
-				System.out.print(output[j] + (j + 1 != output.length ? "\t" : ""));
+				System.out.printf("%.2f%s", output[j], j + 1 != output.length ? "\t" : "");
 			}
 			
 			System.out.println();
 		}
-		
-		System.out.println();
-		
-		System.out.println(rprop.getMse());
 		
 		System.exit(success ? 0 : 1);
 	}
