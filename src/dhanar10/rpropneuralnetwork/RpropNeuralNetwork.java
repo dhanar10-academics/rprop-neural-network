@@ -25,7 +25,7 @@ public class RpropNeuralNetwork {
 		System.out.println();
 		
 		for (int i = 0; i < data.length; i++) {
-			double output[] = rprop.run(data[i]);
+			double output[] = rprop.compute(data[i]);
 			
 			for (int j = 0; j < data[i].length - output.length; j++) {
 				System.out.printf("%.2f%s", data[i][j], "\t");
@@ -108,7 +108,7 @@ public class RpropNeuralNetwork {
 					}
 				}
 				
-				run(yInput);
+				this.compute(yInput);
 				
 				for (int i = 0; i < yOutput.length; i++) {
 					eOutput[i] = (yTarget[i] - yOutput[i]) * dsigmoid(yOutput[i]);
@@ -196,7 +196,7 @@ public class RpropNeuralNetwork {
 		return success;
 	}
 	
-	public double[] run(double input[]) {
+	public double[] compute(double input[]) {
 		for (int i = 0; i < yInput.length; i++) {
 			yInput[i] = input[i];
 		}
