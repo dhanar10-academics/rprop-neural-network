@@ -63,15 +63,53 @@ public class RpropNeuralNetwork {
 		
 		for (int i = 0; i < wInputHidden.length; i++) {
 			for (int j = 0; j < wInputHidden[0].length; j++) {
-				wInputHidden[i][j] = Math.random();
+				wInputHidden[i][j] = Math.random() * 2 - 1;
 			}
 		}
 		
 		for (int i = 0; i < wHiddenOutput.length; i++) {
 			for (int j = 0; j < wHiddenOutput[0].length; j++) {
-				wHiddenOutput[i][j] = Math.random();
+				wHiddenOutput[i][j] = Math.random() * 2 - 1;
 			}
 		}
+		
+		// BEGIN Nguyen-Widrow
+		
+		double bInputHidden = 0.7 * Math.pow(yHidden.length, 1.0 / yInput.length);
+		double nInputHidden = 0;
+		
+		for (int i = 0; i < wInputHidden.length; i++) {
+			for (int j = 0; j < wInputHidden[0].length; j++) {
+				nInputHidden += Math.pow(wInputHidden[i][j], 2);
+			}
+		}
+		
+		nInputHidden = Math.sqrt(nInputHidden);
+		
+		for (int i = 0; i < wInputHidden.length; i++) {
+			for (int j = 0; j < wInputHidden[0].length; j++) {
+				wInputHidden[i][j] = bInputHidden * wInputHidden[i][j] / nInputHidden;
+			}
+		}
+		
+		double bHiddenOutput = 0.7 * Math.pow(yOutput.length, 1.0 / yHidden.length);
+		double nHiddenOutput = 0;
+		
+		for (int i = 0; i < wHiddenOutput.length; i++) {
+			for (int j = 0; j < wHiddenOutput[0].length; j++) {
+				nHiddenOutput += Math.pow(wHiddenOutput[i][j], 2);
+			}
+		}
+		
+		nHiddenOutput = Math.sqrt(nHiddenOutput);
+		
+		for (int i = 0; i < wHiddenOutput.length; i++) {
+			for (int j = 0; j < wHiddenOutput[0].length; j++) {
+				wHiddenOutput[i][j] = bHiddenOutput * wHiddenOutput[i][j] / nHiddenOutput;
+			}
+		}
+		
+		// END Nguyen-Widrow
 		
 		for (int i = 0; i < dInputHidden.length; i++) {
 			for (int j = 0; j < dInputHidden[0].length; j++) {
