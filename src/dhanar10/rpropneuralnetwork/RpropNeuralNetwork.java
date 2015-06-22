@@ -80,7 +80,7 @@ public class RpropNeuralNetwork {
 		
 		for (int i = 0; i < wInputHidden.length; i++) {
 			for (int j = 0; j < wInputHidden[0].length; j++) {
-				nInputHidden += Math.pow(wInputHidden[i][j], 2);
+				nInputHidden += wInputHidden[i][j] * wInputHidden[i][j];
 			}
 		}
 		
@@ -97,7 +97,7 @@ public class RpropNeuralNetwork {
 		
 		for (int i = 0; i < wHiddenOutput.length; i++) {
 			for (int j = 0; j < wHiddenOutput[0].length; j++) {
-				nHiddenOutput += Math.pow(wHiddenOutput[i][j], 2);
+				nHiddenOutput += wHiddenOutput[i][j] * wHiddenOutput[i][j];
 			}
 		}
 		
@@ -173,7 +173,7 @@ public class RpropNeuralNetwork {
 				}
 				
 				for (int j = 0; j < yOutput.length; j++) {
-					mse += Math.pow(yTarget[j] - yOutput[j], 2);
+					mse += (yTarget[j] - yOutput[j]) * (yTarget[j] - yOutput[j]);
 				}
 			}
 			
