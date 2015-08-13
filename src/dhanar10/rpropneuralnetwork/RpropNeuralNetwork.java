@@ -32,7 +32,7 @@ public class RpropNeuralNetwork {
 	public static void main(String[] args) {
 		double data[][] = {{0, 0, 0}, {0, 1, 1}, {1, 0, 1}, {1, 1, 0}}; // XOR
 		
-		RpropNeuralNetwork rprop = new RpropNeuralNetwork(2, 2, 1);
+		RpropNeuralNetwork rprop = new RpropNeuralNetwork(2, 4, 1);
 		rprop.setTargetMse(0.0001);
 		rprop.setMaxEpoch(1000);
 		
